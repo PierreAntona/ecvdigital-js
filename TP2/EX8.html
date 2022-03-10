@@ -4,20 +4,19 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exercice 5</title>
+    <title>Exercice 8</title>
 </head>
-<body>
+<body onclick="mix(this)">
     <h1>Titre</h1>
     <h4>Sous-titre</h4>
     <p>Premier paragraphe</p>
-    <p>Deuxième paragraphe</p>
-    <p>troisième paragraphe</p>
-    <p>Quatrième paragraphe</p>
-    <span>span</span>
+    <p>Second paragraphe</p>
+    <span>Span</span>
     <script>
-        const el = document.querySelectorAll("p");
-        for (let i = 0; i < el.length; i++) {
-            el[i].remove();
+        function mix(el) {
+            for (let i = el.children.length; i >= 0; i--) {
+                el.appendChild(el.children[Math.random() * i | 0]);
+            }
         }
     </script>
 </body>

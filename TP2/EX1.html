@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercice 1</title>
+</head>
+<body>
+    <img style="width: 200px;" onclick="rotate()" src="https://upload.wikimedia.org/wikipedia/commons/9/9a/Gull_portrait_ca_usa.jpg"/>
+    <script>
+        let i = 1;
+        function rotate() {
+            const a = 90;
+            const deg = a*i; 
+            const rotation = 'rotate('+deg+'deg)';
+            document.getElementsByTagName('img')[0].style.transform = rotation;
+            i ++;
+        }
+    </script>
+</body>
+</html>

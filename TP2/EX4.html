@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercice 4</title>
+</head>
+<body onkeydown="moveDiv(event)">
+    <div style="position: relative; top:0; left: 0; width: 50px; height: 50px; background-color: pink;"></div>
+    <script>
+        function moveDiv(event) {
+            const myDiv = document.getElementsByTagName('div')[0];
+            const top = parseInt(myDiv.style.top)-50+'px';
+            const bottom = parseInt(myDiv.style.top)+50+'px';
+            const left = parseInt(myDiv.style.left)-50+'px';
+            const right = parseInt(myDiv.style.left)+50+'px';
+
+            event.key == 'ArrowDown' ? myDiv.style.top = bottom : '';
+            event.key == 'ArrowUp' ? myDiv.style.top = top : '';
+            event.key == 'ArrowLeft' ? myDiv.style.left = left : '';
+            event.key == 'ArrowRight' ? myDiv.style.left = right : '';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercice 5</title>
+</head>
+<body>
+    <img style="width: 10%;" onmouseover="zoom(this)" onmouseout="dezoom(this)" src="https://upload.wikimedia.org/wikipedia/commons/9/9a/Gull_portrait_ca_usa.jpg"/>
+    <img style="width: 10%;" onmouseover="zoom(this)" onmouseout="dezoom(this)" src="https://upload.wikimedia.org/wikipedia/commons/9/9a/Gull_portrait_ca_usa.jpg"/>
+    <img style="width: 10%;" onmouseover="zoom(this)" onmouseout="dezoom(this)" src="https://upload.wikimedia.org/wikipedia/commons/9/9a/Gull_portrait_ca_usa.jpg"/>
+    <script>
+        function zoom(el) {
+            const bigger = parseInt(el.style.width)*3+'%';
+            el.style.width = bigger;
+        }
+        function dezoom(el) {
+            const smaller = parseInt(el.style.width)/3+'%';
+            el.style.width = smaller;
+        }
+    </script>
+</body>
+</html>
