@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Exercice 3</title>
+  </head>
+  <body>
+    <script>
+      const rand = Math.floor(Math.random() * 11) + 5;
+
+      for (let i = 0; i < rand; i++) {
+        const newDiv = document.createElement("div");
+        const color = "#" + (((1 << 24) * Math.random()) | 0).toString(16);
+        newDiv.style.cssText = "width:100%;height:50px;margin-bottom:5px;";
+        newDiv.style.background = color;
+        document.body.appendChild(newDiv);
+      }
+
+      const el = document.getElementsByTagName("body")[0];
+      const colors = [];
+
+      el.addEventListener("click", function (event) {
+
+        console.log(event.target);
+
+        if (event.target.nodeName != "BODY") {
+
+          if (event.target.style.backgroundColor != "rgb(255, 0, 0)") {
+            colors.push(event.target.style.backgroundColor);
+            event.target.style.backgroundColor = "rgb(255, 0, 0)";
+          } else {
+            event.target.style.backgroundColor = colors[0];
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

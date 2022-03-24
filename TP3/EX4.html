@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Exercice 4</title>
+  </head>
+  <body>
+    <ul></ul>
+    <script>
+      const el = document.getElementsByTagName("body")[0];
+      const liste = document.getElementsByTagName("ul")[0];
+
+      el.addEventListener("keydown", function (event) {
+        if (liste.childElementCount < 20) {
+          const node = document.createElement("li");
+          const textnode = document.createTextNode(event.key);
+          node.appendChild(textnode);
+          liste.appendChild(node);
+        } else {
+          liste.removeChild(liste.firstElementChild);
+          const node = document.createElement("li");
+          const textnode = document.createTextNode(event.key);
+          node.appendChild(textnode);
+          liste.appendChild(node);
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Exercices</title>
+  </head>
+  <body>
+    <script>
+      const revert = (string) => {
+        const stringToArray = Array.from(string);
+        const reversedArray = stringToArray.reverse();
+        return reversedArray.join("");
+      };
+
+      const ucFisrt = (string) => {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+      };
+
+      const capitalize = (string) => {
+        const stringToArray = string.split(" ");
+        for (let i = 0; i < stringToArray.length; i++) {
+            stringToArray[i] = ucFisrt(stringToArray[i]);
+        }
+        return stringToArray.join(" ");
+      }
+
+      const pascalCase = (string) => {
+        const stringToArray = string.split(" ");
+        for (let i = 0; i < stringToArray.length; i++) {
+            stringToArray[i] = ucFisrt(stringToArray[i]);
+        }
+        return stringToArray.join("");
+      }
+
+      const palindrome = (string) => {
+        const reversedString  = revert(string);
+        return string == reversedString ? true : false;
+      }
+
+      const findLongestWord = (string) => {
+        const stringToArray = string.split(" ");
+
+        let longestWord = "";
+
+        for (let i = 0; i < stringToArray.length; i++) {
+            if (stringToArray[i].length > longestWord.length) {
+                longestWord = stringToArray[i];
+            };
+        }
+        return longestWord;
+      }
+
+      document.write(revert("Hello I'm Robert !")+"<br>");
+      document.write(ucFisrt("hello")+"<br>");
+      document.write(capitalize("hello i'm robert")+"<br>");
+      document.write(pascalCase("sentence in pascalCase")+"<br>");
+      document.write(palindrome("kayak")+"<br>");
+      document.write(findLongestWord("Le chemin le plus court n'est pas toujours le meilleur")+"<br>");
+    </script>
+  </body>
+</html>
