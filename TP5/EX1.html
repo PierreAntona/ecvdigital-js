@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Exercice 1</title>
+  </head>
+  <body>
+    <script>
+        const getHashTags = (string) => {
+        return string
+          .split(" ")
+          .sort((a, b) => b.length - a.length)
+          .slice(0, 3)
+          .map(function (element) {
+            return "#" + element.toLowerCase();
+          });
+      };
+      console.log(
+        getHashTags("How the Avocado Became the Fruit of the Global Trade")
+      );
+      console.log(
+        getHashTags(
+          "Why You Will Probably Pay More for Your Christmas Tree This Year"
+        )
+      );
+      console.log(
+        getHashTags("Hey Parents, Surprise, Fruit Juice Is Not Fruit")
+      );
+      console.log(getHashTags("Visualizing Science"));
+    </script>
+  </body>
+</html>

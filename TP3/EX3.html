@@ -7,6 +7,9 @@
     <title>Exercice 3</title>
   </head>
   <body>
+    <style>
+      .red {background: red!important;}
+    </style>
     <script>
       const rand = Math.floor(Math.random() * 11) + 5;
 
@@ -19,20 +22,12 @@
       }
 
       const el = document.getElementsByTagName("body")[0];
-      const colors = [];
 
       el.addEventListener("click", function (event) {
-
-        console.log(event.target);
-
         if (event.target.nodeName != "BODY") {
-
-          if (event.target.style.backgroundColor != "rgb(255, 0, 0)") {
-            colors.push(event.target.style.backgroundColor);
-            event.target.style.backgroundColor = "rgb(255, 0, 0)";
-          } else {
-            event.target.style.backgroundColor = colors[0];
-          }
+          event.target.classList.length == 0 ? 
+          event.target.classList.add('red') : 
+          event.target.classList.remove('red');
         }
       });
     </script>
