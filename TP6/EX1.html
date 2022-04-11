@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Exercice 1</title>
+  </head>
+  <body>
+    <script>
+      const vowels = ["a", "e", "i", "o", "u", "A", "E", "I", "O", "U"];
+      const month = ["A", "B", "C", "D", "E", "H", "L", "M", "P", "R", "S", "T"];
+
+      const surname = (nom) => {
+        let surname = Array.from(nom).filter(
+          (value) => !vowels.includes(value)
+        );
+
+        if (surname.length < 3) {
+          surname = surname.concat(
+            Array.from(nom).filter((value) => vowels.includes(value))
+          );
+          surname.push("x","x","x");
+        }
+
+        return surname.slice(0, 3).join("").toUpperCase();
+      };
+
+      const name = (prenom) => {
+        let name = Array.from(prenom).filter(
+          (value) => !vowels.includes(value)
+        );
+
+        if (name.length > 3) {
+            name.splice(1, 1);
+        }
+
+        else if (name.length < 3) {
+          name = name.concat(
+            Array.from(prenom).filter((value) => vowels.includes(value))
+          );
+          name.push("x","x","x");
+        }
+
+        return name.slice(0, 3).join("").toUpperCase();
+      };
+
+      const birthDate = (date, genre) => {
+        let birthDate = Array.from(date).slice(-2);
+        birthDate.push(month[(date.split("/").splice(1,1))-1]);
+
+        if (genre == "M") {
+            let day = date.split("/").splice(0,1);
+            if (parseInt(day) < 10) {
+                day.unshift("0");
+            }
+            birthDate.push(day.join(""));
+        } 
+        else {
+            birthDate.push(parseInt(date.split("/").splice(0,1))+40);
+        }
+
+        return birthDate.join("");
+      }
+
+      const fiscalCode = (obj) => {
+        console.log(surname(obj.surname)+name(obj.name)+birthDate(obj.dob, obj.gender));
+      };
+
+      fiscalCode({
+        name: "Matt",
+        surname: "Edabit",
+        gender: "M",
+        dob: "1/1/1900",
+      }); //"DBTMTT00A01"
+
+      fiscalCode({
+        name: "Helen",
+        surname: "Yu",
+        gender: "F",
+        dob: "1/12/1950",
+      }); //"YUXHLN50T41"
+
+      fiscalCode({
+        name: "Mickey",
+        surname: "Mouse",
+        gender: "M",
+        dob: "16/1/1928",
+      }); //"MSOMKY28A16"
+    </script>
+  </body>
+</html>
