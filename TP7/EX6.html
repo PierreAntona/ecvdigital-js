@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercice 6</title>
+</head>
+<body>
+    <script>
+        const body = document.getElementsByTagName('body')[0];
+
+        const setupList = (titre) => {
+            const title = document.createElement('h1');
+            title.innerHTML = titre;
+            body.appendChild(title);
+        }
+
+        async function getPeople() {
+            setupList('People');
+            const list = document.createElement('ul');
+            body.appendChild(list);
+            try {
+                const peoples = await fetch('https://swapi.dev/api/people').then((res) => res.json());
+                const data = await peoples.results.map((item) => {
+                    let li = document.createElement('li');
+                    let name = document.createElement('span');
+                    
+                    name.innerHTML = `${item.name}`;
+
+                    li.appendChild(name);
+                    list.appendChild(li);
+                });
+            } catch (e) {
+                console.log(e);
+            }
+        }
+
+        async function getStarships() {
+            setupList('Starships');
+            const list = document.createElement('ul');
+            body.appendChild(list);
+            try {
+                const starships = await fetch('https://swapi.dev/api/starships').then((res) => res.json());
+                const data = await starships.results.map((item) => {
+                    
+                    let li = document.createElement('li');
+                    let name = document.createElement('span');
+                    
+                    name.innerHTML = `${item.name}`;
+
+                    li.appendChild(name);
+                    list.appendChild(li);
+                });
+            } catch (e) {
+                console.log(e);
+            }
+        }
+
+        async function getPlanets() {
+            setupList('Planets');
+            const list = document.createElement('ul');
+            body.appendChild(list);
+            try {
+                const planets = await fetch('https://swapi.dev/api/planets').then((res) => res.json());
+                const data = await planets.results.map((item) => {
+                    
+                    let li = document.createElement('li');
+                    let name = document.createElement('span');
+                    
+                    name.innerHTML = `${item.name}`;
+
+                    li.appendChild(name);
+                    list.appendChild(li);
+                });
+            } catch (e) {
+                console.log(e);
+            }
+        }
+
+        getPeople();
+        getStarships();
+        getPlanets();
+    </script>
+</body>
+</html>

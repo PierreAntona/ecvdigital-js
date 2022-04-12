@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Exercice 5</title>
+  </head>
+  <body>
+    <script>
+      async function execute() {
+        try {
+          const res = await checkLength("Ma chaîne");
+          console.log(res);
+        } catch (e) {
+          console.log(e);
+        }
+        try {
+          const res = await checkDiff(
+            Math.floor(Math.random() * 10),
+            Math.floor(Math.random() * 10)
+          );
+          console.log(res);
+        } catch (e) {
+          console.log(e);
+        }
+        try {
+          const res = await checkAge(birth, today);
+          console.log(res);
+        } catch (e) {
+          console.log(e);
+        }
+      }
+
+      const checkLength = (string) => {
+        return new Promise((resolve, failure) => {
+          if (string.length < 20) {
+            resolve(true);
+          } else {
+            failure(`Erreur : la chaîne contient ${string.length} caractères.`);
+          }
+        });
+      };
+
+      const checkDiff = (a, b) => {
+        return new Promise((resolve, failure) => {
+          if (a > b) {
+            resolve(`La différence entre ${a} et ${b} est ${a - b}`);
+          } else {
+            failure(`Erreur : ${a} n'est pas supérieur a ${b}`);
+          }
+        });
+      };
+
+      function randomDate(start, end) {
+        return new Date(
+          start.getTime() + Math.random() * (end.getTime() - start.getTime())
+        );
+      }
+
+      const birth = randomDate(new Date(1990, 0, 1), new Date());
+      const birthyear = birth.getFullYear();
+      const birthmonth = birth.getMonth() + 1;
+      const birthday = birth.getDate();
+
+      const today = new Date();
+      const nowyear = today.getFullYear();
+      const nowmonth = today.getMonth() + 1;
+      const nowday = today.getDate();
+
+      const checkAge = (birth, today) => {
+        return new Promise((resolve, failure) => {
+          if (nowyear - birthyear > 18) {
+            resolve(true);
+          } else if (nowyear - birthyear == 18) {
+            if (nowmonth - birthmonth > 0) {
+              resolve(true);
+            } else if (nowmonth - birthmonth == 0) {
+              if (nowday - birthday > 0) {
+                resolve(true);
+              } else if (nowday == birthday) {
+                resolve("Bon anniversaire");
+              } else failure("Erreur : Vous n'êtes pas encore majeur.");
+            } else failure("Erreur : Vous n'êtes pas encore majeur.");
+          } else {
+            failure("Erreur : Vous n'êtes pas encore majeur.");
+          }
+        });
+      };
+
+      execute();
+    </script>
+  </body>
+</html>

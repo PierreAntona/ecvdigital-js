@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Exercice 3</title>
+  </head>
+  <body>
+    <script>
+      function randomDate(start, end) {
+        return new Date(
+          start.getTime() + Math.random() * (end.getTime() - start.getTime())
+        );
+      }
+
+      const birth = randomDate(new Date(1990, 0, 1), new Date());
+      const birthyear = birth.getFullYear();
+      const birthmonth = birth.getMonth() + 1;
+      const birthday = birth.getDate();
+
+      const today = new Date();
+      const nowyear = today.getFullYear();
+      const nowmonth = today.getMonth() + 1;
+      const nowday = today.getDate();
+
+      console.log(`Date du jour : ${nowday}/${nowmonth}/${nowyear}`);
+      console.log(`Date de naissance : ${birthday}/${birthmonth}/${birthyear}`);
+
+      function checkAge(birth, today) {
+        return new Promise((successCallback, failureCallback) => {
+          if (nowyear - birthyear > 18) {
+            successCallback(true);
+          } else if (nowyear - birthyear == 18) {
+            if (nowmonth - birthmonth > 0) {
+              successCallback(true);
+            } else if (nowmonth - birthmonth == 0) {
+              if (nowday - birthday > 0) {
+                successCallback(true);
+              } else if (nowday == birthday) {
+                successCallback("Bon anniversaire");
+              } else failureCallback();
+            } else failureCallback();
+          } else {
+            failureCallback();
+          }
+        });
+      }
+
+      function successCallback(res) {
+        console.log(res);
+      }
+
+      function failureCallback() {
+        console.log("Erreur : Vous n'êtes pas encore majeur.");
+      }
+
+      const promise = checkAge();
+      promise.then(successCallback, failureCallback);
+    </script>
+  </body>
+</html>

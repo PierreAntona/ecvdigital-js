@@ -8,86 +8,53 @@
   </head>
   <body>
     <script>
-        const prop_access = (obj, path) => {
-            if (!path || path == "") {
-                return obj;
+      function merge(a, b) {
+        for (const key in a) {
+          if (b[key]) {
+            if (typeof a[key] == "object") {
+              Object.keys(a[key]).length > 1
+                ? (a[key] = [...a[key]])
+                : (a[key] = [a[key]]);
+              Object.keys(b[key]).length > 1
+                ? a[key].push(...b[key])
+                : a[key].push(b[key]);
             }
-            else {
-                if (Object.keys(obj) == "animal") {
-                    const chemin = path;
-                    return `${obj}.${path}`;
-
-                }
-                else if (Object.keys(obj) == "animals") {
-                    return path;
-                }
+            if (typeof a[key] == "number") {
+              a[key] = [a[key]];
+              typeof b[key] == "number"
+                ? a[key].push(b[key])
+                : a[key].push(...b[key]);
             }
+            if (typeof a[key] == "string") {
+              a[key] = [a[key]];
+              typeof b[key] == "string"
+                ? a[key].push(b[key])
+                : a[key].push(...b[key]);
+            }
+          }
         }
 
-      console.log(
-        prop_access(
-          {
-            animal: {
-              type: {
-                name: "dog",
-              },
-            },
-          },
-          "animal.type.name"
-        )
-      ); // dog
+        for (const key in b) {
+          if (!a[key]) {
+            a[key] = b[key];
+          }
+        }
 
-      console.log(
-        prop_access(
-          {
-            animal: {
-              type: {
-                name: "dog",
-              },
-            },
-          },
-          "animal.type"
-        )
-      ); // { name: "dog" }
+        return a;
+      }
 
-      console.log(
-        prop_access(
-          {
-            animals: [
-              {
-                type: {
-                  name: "dog",
-                },
-              },
-              {
-                type: {
-                  name: "cat",
-                },
-              },
-            ],
-          },
-          "animals.1.type"
-        )
-      ); // { name: "cat" }
+      const object = {
+        a: [{ x: 2 }, { y: 4 }],
+        b: 1,
+      };
 
-      console.log(
-        prop_access(
-          {
-            animals: [
-              {
-                type: {
-                  name: "dog",
-                },
-              },
-              {
-                type: {
-                  name: "cat",
-                },
-              },
-            ],
-          },
-        )
-      ); // full object 
+      const other = {
+        a: { z: 3 },
+        b: [2, 3],
+        c: "foo",
+      };
+
+      console.log(merge(object, other));
     </script>
   </body>
 </html>

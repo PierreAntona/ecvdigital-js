@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Exercice 2</title>
+  </head>
+  <body>
+    <script>
+      function checkDiff(a, b) {
+        return new Promise((successCallback, failureCallback) => {
+          if (a > b) {
+            successCallback(`La différence entre ${a} et ${b} est ${a - b}`);
+          } else {
+            failureCallback(`Erreur : ${a} n'est pas supérieur a ${b}`);
+          }
+        });
+      }
+
+      function successCallback(res) {
+        console.log(res);
+      }
+
+      function failureCallback(error) {
+        console.log(error);
+      }
+
+      const promise = checkDiff(
+        Math.floor(Math.random() * 10),
+        Math.floor(Math.random() * 10)
+      );
+      promise.then(successCallback, failureCallback);
+    </script>
+  </body>
+</html>
