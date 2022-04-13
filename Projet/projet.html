@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Projet NFTs</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css"
+    />
+  </head>
+  <body>
+    <nav class="container-fluid">
+        <ul>
+          <li><strong>Projet NFTs</strong></li>
+        </ul>
+        <ul>
+          <li><a href="#">Order by creator</a></li>
+          <li><a href="#">Order by best selling</a></li>
+          <li><a href="#" role="button" class="outline">Favorites</a></li>
+        </ul>
+      </nav>
+    <main class="container">
+      <!-- Modal -->
+      <dialog id="modal-example">
+        <article>
+          <a
+            href="#close"
+            aria-label="Close"
+            class="close"
+            data-target="modal-example"
+            onClick="toggleModal(event)"
+          >
+          </a>
+          <h3>Confirm your action!</h3>
+          <p>
+            Cras sit amet maximus risus. Pellentesque sodales odio sit amet
+            augue finibus pellentesque. Nullam finibus risus non semper euismod.
+          </p>
+        </article>
+      </dialog>
+    </main>
+  </body>
+  <style>
+    @media only screen and (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --primary: #5e35b1;
+        --primary-hover: #673ab7;
+        --primary-focus: rgba(94, 53, 177, 0.25);
+        --primary-inverse: #fff;
+      }
+    }
+    main {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+    img {
+      max-width: 10em;
+    }
+    article {
+      width: 30%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: justify;
+    }
+  </style>
+  <script type="text/javascript">
+    const root = document.querySelector("main");
+
+    function createElement(tag, config, parent = null) {
+      const { source, text, cssText } = config || {};
+      const element = document.createElement(tag);
+
+      if (cssText) {
+        element.cssText = cssText;
+      }
+
+      if (source) {
+        element.src = source;
+      }
+
+      if (text) {
+        element.innerHTML = text;
+        if (text == "Détails") {
+          element.setAttribute("data-target", "modal-example");
+          element.onclick = function () {
+            toggleModal(event);
+          };
+        }
+      }
+
+      if (!parent) {
+        root.appendChild(element);
+      } else {
+        parent.appendChild(element);
+      }
+
+      return element;
+    }
+
+    async function postData(url = "https://api.m3o.com/v1/nft/Assets") {
+      const response = await fetch(url, {
+        headers: {
+          Authorization:
+            "Bearer MjU3ZGEzZjItYWQ1OC00YjgyLWE2MWMtNDVmYmUwMDUxZGI0",
+        },
+      });
+
+      const data = await response.json();
+      const nft = await data.assets.map((item) => {
+        if (item.image_url) {
+          console.log(item);
+          const myDiv = createElement("article");
+          createElement("img", { source: item.image_url }, myDiv);
+          createElement("h5", { text: item.name }, myDiv);
+          //createElement("small", { text: item.description }, myDiv);
+          createElement("button", { text: "Détails" }, myDiv);
+        }
+      });
+    }
+
+    postData();
+
+    /*
+     * Modal
+     *
+     * Pico.css - https://picocss.com
+     * Copyright 2019-2022 - Licensed under MIT
+     */
+
+    // Config
+    const isOpenClass = "modal-is-open";
+    const openingClass = "modal-is-opening";
+    const closingClass = "modal-is-closing";
+    const animationDuration = 400; // ms
+    let visibleModal = null;
+
+    // Toggle modal
+    const toggleModal = (event) => {
+      event.preventDefault();
+      const modal = document.getElementById(
+        event.target.getAttribute("data-target")
+      );
+      typeof modal != "undefined" && modal != null && isModalOpen(modal)
+        ? closeModal(modal)
+        : openModal(modal);
+    };
+
+    // Is modal open
+    const isModalOpen = (modal) => {
+      return modal.hasAttribute("open") && modal.getAttribute("open") != "false"
+        ? true
+        : false;
+    };
+
+    // Open modal
+    const openModal = (modal) => {
+      if (isScrollbarVisible()) {
+        document.documentElement.style.setProperty(
+          "--scrollbar-width",
+          `${getScrollbarWidth()}px`
+        );
+      }
+      document.documentElement.classList.add(isOpenClass, openingClass);
+      setTimeout(() => {
+        visibleModal = modal;
+        document.documentElement.classList.remove(openingClass);
+      }, animationDuration);
+      modal.setAttribute("open", true);
+    };
+
+    // Close modal
+    const closeModal = (modal) => {
+      visibleModal = null;
+      document.documentElement.classList.add(closingClass);
+      setTimeout(() => {
+        document.documentElement.classList.remove(closingClass, isOpenClass);
+        document.documentElement.style.removeProperty("--scrollbar-width");
+        modal.removeAttribute("open");
+      }, animationDuration);
+    };
+
+    // Close with a click outside
+    document.addEventListener("click", (event) => {
+      if (visibleModal != null) {
+        const modalContent = visibleModal.querySelector("article");
+        const isClickInside = modalContent.contains(event.target);
+        !isClickInside && closeModal(visibleModal);
+      }
+    });
+
+    // Close with Esc key
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && visibleModal != null) {
+        closeModal(visibleModal);
+      }
+    });
+
+    // Get scrollbar width
+    const getScrollbarWidth = () => {
+      // Creating invisible container
+      const outer = document.createElement("div");
+      outer.style.visibility = "hidden";
+      outer.style.overflow = "scroll"; // forcing scrollbar to appear
+      outer.style.msOverflowStyle = "scrollbar"; // needed for WinJS apps
+      document.body.appendChild(outer);
+
+      // Creating inner element and placing it in the container
+      const inner = document.createElement("div");
+      outer.appendChild(inner);
+
+      // Calculating difference between container's full width and the child width
+      const scrollbarWidth = outer.offsetWidth - inner.offsetWidth;
+
+      // Removing temporary elements from the DOM
+      outer.parentNode.removeChild(outer);
+
+      return scrollbarWidth;
+    };
+
+    // Is scrollbar visible
+    const isScrollbarVisible = () => {
+      return document.body.scrollHeight > screen.height;
+    };
+  </script>
+</html>
